@@ -1,0 +1,18 @@
+# Password Generator — Python dependencies
+#
+# Core application
+# ─────────────────────────────────────────────────────────────
+# The generator uses only the Python standard library:
+#   secrets     — cryptographically secure random generation
+#   string      — character pool constants
+#   pathlib     — cross-platform file I/O
+#   dataclasses — structured data containers
+#
+# Optional — clipboard support
+# ─────────────────────────────────────────────────────────────
+# Uncomment to enable "Copy to Clipboard" feature:
+pyperclip>=1.8.2
+
+# Development / Testing
+# ─────────────────────────────────────────────────────────────
+pytest>=8.0.0

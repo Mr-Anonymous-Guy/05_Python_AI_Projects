@@ -1,0 +1,51 @@
+# ──────────────────────────────────────────────────────────────
+# .gitignore — Password Generator
+# ──────────────────────────────────────────────────────────────
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.env
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Pytest / coverage
+.pytest_cache/
+.cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# MyPy
+.mypy_cache/
+
+# IDEs
+.idea/
+.vscode/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Project-specific ──────────────────────────────────────────
+# Exported password files — NEVER commit these
+passwords_*.txt
+exported_passwords/
+
+# Logs
+*.log
