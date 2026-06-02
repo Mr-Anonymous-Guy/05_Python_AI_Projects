@@ -1,0 +1,68 @@
+/* 
+ styles.css - EduSense Custom CSS 
+ Inspiration: Modern EdTech platforms (Khan Academy, Duolingo, Notion AI)
+*/
+
+:root {
+    --primary: #4F46E5; /* Indigo */
+    --secondary: #10B981; /* Emerald */
+    --background: #F8FAFC; /* Slate 50 */
+    --text-main: #1E293B; /* Slate 800 */
+    --card-bg: #FFFFFF;
+}
+
+/* Base Body styling */
+.stApp {
+    background-color: var(--background);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* Sidebar styling */
+[data-testid="stSidebar"] {
+    background-color: var(--card-bg) !important;
+    border-right: 1px solid #E2E8F0;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: var(--primary);
+    font-weight: 700 !important;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: var(--primary) !important;
+    color: white !important;
+    border-radius: 8px !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease;
+}
+
+.stButton > button:hover {
+    background-color: #4338CA !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat Messages */
+.stChatMessage {
+    background-color: var(--card-bg) !important;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+[data-testid="chat-message-user"] {
+    background-color: #EEF2FF !important; /* Light Indigo */
+    border-color: #C7D2FE;
+}
+
+/* Cards & Metrics */
+div[data-testid="stMetricValue"] {
+    color: var(--secondary);
+    font-weight: 700;
+}
