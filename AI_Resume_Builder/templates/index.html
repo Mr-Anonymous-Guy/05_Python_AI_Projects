@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-file-signature"></i>
+                <span>ResumeAI</span>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#" class="nav-item active" data-tab="editor">
+                    <i class="fa-solid fa-pen-to-square"></i> Editor
+                </a>
+                <a href="#" class="nav-item" data-tab="ai-tools">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Assistant
+                </a>
+                <a href="#" class="nav-item" data-tab="ats">
+                    <i class="fa-solid fa-chart-line"></i> ATS Analysis
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="dot" id="system-status-dot"></span>
+                    <span id="system-status-text">Checking...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Editor Tab -->
+            <div id="tab-editor" class="tab-content active">
+                <header class="workspace-header">
+                    <h1>Resume Builder</h1>
+                    <div class="actions">
+                        <button class="btn btn-secondary" id="btn-load-sample"><i class="fa-solid fa-download"></i> Load Sample</button>
+                    </div>
+                </header>
+                
+                <div class="editor-sections">
+                    <!-- Personal Info -->
+                    <section class="form-section">
+                        <h2>Personal Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="personal-name" placeholder="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="personal-email" placeholder="john@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="text" id="personal-phone" placeholder="(555) 123-4567">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" id="personal-location" placeholder="New York, NY">
+                            </div>
+                            <div class="form-group">
+                                <label>LinkedIn (Optional)</label>
+                                <input type="text" id="personal-linkedin" placeholder="linkedin.com/in/johndoe">
+                            </div>
+                            <div class="form-group">
+                                <label>GitHub/Portfolio (Optional)</label>
+                                <input type="text" id="personal-github" placeholder="github.com/johndoe">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Professional Summary</label>
+                                <div class="textarea-wrapper">
+                                    <textarea id="personal-summary" rows="4" placeholder="Experienced professional..."></textarea>
+                                    <button class="ai-action-btn" id="btn-ai-summary" title="Generate with AI"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Experience -->
+                    <section class="form-section">
+                        <div class="section-header">
+                            <h2>Experience</h2>
+                            <button class="btn btn-sm btn-outline" id="btn-add-experience"><i class="fa-solid fa-plus"></i> Add Role</button>
+                        </div>
+                        <div id="experience-list" class="item-list"></div>
+                    </section>
+
+                    <!-- Education -->
+                    <section class="form-section">
+                        <div class="section-header">
+                            <h2>Education</h2>
+                            <button class="btn btn-sm btn-outline" id="btn-add-education"><i class="fa-solid fa-plus"></i> Add Degree</button>
+                        </div>
+                        <div id="education-list" class="item-list"></div>
+                    </section>
+
+                    <!-- Skills -->
+                    <section class="form-section">
+                        <h2>Skills</h2>
+                        <div class="form-group full-width">
+                            <label>Comma separated skills</label>
+                            <input type="text" id="skills-input" placeholder="Python, JavaScript, React, Docker">
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- AI Tools Tab -->
+            <div id="tab-ai-tools" class="tab-content">
+                <header class="workspace-header">
+                    <h1>AI Assistant</h1>
+                    <p class="subtitle">Leverage local LLMs to enhance your career profile.</p>
+                </header>
+                <div class="ai-tools-grid">
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <i class="fa-solid fa-file-contract"></i>
+                            <h3>Cover Letter Generator</h3>
+                        </div>
+                        <div class="ai-card-body">
+                            <div class="form-group">
+                                <label>Target Company</label>
+                                <input type="text" id="ai-cl-company" placeholder="e.g. Acme Corp">
+                            </div>
+                            <div class="form-group">
+                                <label>Target Position</label>
+                                <input type="text" id="ai-cl-position" placeholder="e.g. Senior Developer">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Job Description</label>
+                                <textarea id="ai-cl-jd" rows="4" placeholder="Paste the job description..."></textarea>
+                            </div>
+                            <button class="btn btn-primary full-width" id="btn-generate-cl">Generate Letter</button>
+                            <div id="cl-result" class="ai-result-box hidden">
+                                <textarea id="cl-result-text" rows="10"></textarea>
+                                <button class="btn btn-sm btn-secondary copy-btn" data-target="cl-result-text"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <i class="fa-brands fa-linkedin"></i>
+                            <h3>LinkedIn About Section</h3>
+                        </div>
+                        <div class="ai-card-body">
+                            <div class="form-group">
+                                <label>Target Industry/Title</label>
+                                <input type="text" id="ai-li-title" placeholder="e.g. AI Engineering">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Career Goals (Optional)</label>
+                                <textarea id="ai-li-goals" rows="3" placeholder="What are you looking for?"></textarea>
+                            </div>
+                            <button class="btn btn-primary full-width" id="btn-generate-li">Generate Profile</button>
+                            <div id="li-result" class="ai-result-box hidden">
+                                <textarea id="li-result-text" rows="10"></textarea>
+                                <button class="btn btn-sm btn-secondary copy-btn" data-target="li-result-text"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATS Tab -->
+            <div id="tab-ats" class="tab-content">
+                <header class="workspace-header">
+                    <h1>ATS Optimization</h1>
+                    <p class="subtitle">Match your resume against a job description.</p>
+                </header>
+                <div class="ats-container">
+                    <div class="form-group full-width">
+                        <label>Target Job Description</label>
+                        <textarea id="ats-jd" rows="6" placeholder="Paste the job description to analyze how well your resume matches..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" id="btn-analyze-ats"><i class="fa-solid fa-radar"></i> Analyze Match</button>
+                    
+                    <div id="ats-results" class="ats-results-panel hidden">
+                        <div class="ats-score-header">
+                            <div class="score-circle">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" id="ats-score-path" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.35" class="percentage" id="ats-score-value">0%</text>
+                                </svg>
+                            </div>
+                            <div class="score-info">
+                                <h2>ATS Compatibility</h2>
+                                <p class="rating" id="ats-rating">Calculating...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="ats-breakdown">
+                            <div class="ats-card">
+                                <h3><i class="fa-solid fa-lightbulb"></i> Recommendations</h3>
+                                <ul id="ats-recommendations" class="recommendation-list"></ul>
+                            </div>
+                            
+                            <div class="ats-card">
+                                <h3><i class="fa-solid fa-tags"></i> Keyword Match</h3>
+                                <div class="keyword-lists">
+                                    <div class="keywords-found">
+                                        <h4>Found (<span id="count-found">0</span>)</h4>
+                                        <div id="ats-keywords-found" class="tag-container"></div>
+                                    </div>
+                                    <div class="keywords-missing">
+                                        <h4>Missing (<span id="count-missing">0</span>)</h4>
+                                        <div id="ats-keywords-missing" class="tag-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+
+        <!-- Preview Pane -->
+        <aside class="preview-pane">
+            <header class="preview-header">
+                <h2>Live Preview</h2>
+                <div class="export-actions">
+                    <button class="btn btn-icon" id="btn-export-pdf" title="Export PDF"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                    <button class="btn btn-icon" id="btn-export-docx" title="Export DOCX"><i class="fa-solid fa-file-word"></i> DOCX</button>
+                    <button class="btn btn-icon" id="btn-export-txt" title="Export TXT"><i class="fa-solid fa-file-lines"></i> TXT</button>
+                </div>
+            </header>
+            <div class="preview-document-container">
+                <div id="resume-preview" class="resume-sheet">
+                    <!-- Live preview content rendered here via JS -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loading-overlay" class="overlay hidden">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <p id="loading-text">Processing...</p>
+        </div>
+    </div>
+
+    <!-- Templates for dynamic elements -->
+    <template id="tpl-experience">
+        <div class="dynamic-item experience-item" data-id="{id}">
+            <div class="item-header">
+                <h4 class="item-title">New Role</h4>
+                <button class="btn-icon-sm btn-delete"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Company</label>
+                    <input type="text" class="exp-company" placeholder="Company Name">
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <input type="text" class="exp-position" placeholder="Job Title">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" class="exp-location" placeholder="City, State">
+                </div>
+                <div class="form-group">
+                    <label>Start - End Date</label>
+                    <div class="date-range">
+                        <input type="text" class="exp-start" placeholder="MM/YYYY">
+                        <span>-</span>
+                        <input type="text" class="exp-end" placeholder="Present">
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label>Responsibilities (One per line)</label>
+                    <textarea class="exp-resp" rows="3" placeholder="Developed new features..."></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label>Achievements (One per line)</label>
+                    <textarea class="exp-achiev" rows="2" placeholder="Increased revenue by 20%..."></textarea>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <template id="tpl-education">
+        <div class="dynamic-item education-item" data-id="{id}">
+            <div class="item-header">
+                <h4 class="item-title">New Education</h4>
+                <button class="btn-icon-sm btn-delete"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Institution</label>
+                    <input type="text" class="edu-inst" placeholder="University Name">
+                </div>
+                <div class="form-group">
+                    <label>Degree</label>
+                    <input type="text" class="edu-degree" placeholder="B.S.">
+                </div>
+                <div class="form-group">
+                    <label>Field of Study</label>
+                    <input type="text" class="edu-field" placeholder="Computer Science">
+                </div>
+                <div class="form-group">
+                    <label>GPA (Optional)</label>
+                    <input type="text" class="edu-gpa" placeholder="3.8">
+                </div>
+                <div class="form-group">
+                    <label>Start - End Date</label>
+                    <div class="date-range">
+                        <input type="text" class="edu-start" placeholder="YYYY">
+                        <span>-</span>
+                        <input type="text" class="edu-end" placeholder="YYYY">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
