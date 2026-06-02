@@ -1,0 +1,13 @@
+# Rock Paper Scissors — Python dependencies
+#
+# This project uses only the Python standard library.
+# No third-party packages are required to run the game.
+#
+# ── Development / Testing ───────────────────────────────────────────────────
+# The test suite uses Python's built-in unittest framework.
+# Run tests with:
+#   python -m pytest tests/          (if pytest is installed)
+#   python -m unittest discover tests/  (zero dependencies)
+
+# Optional: install pytest for richer test output
+pytest>=8.0.0
